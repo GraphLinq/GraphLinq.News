@@ -1,8 +1,5 @@
 using NodeBlock.Engine;
 using NodeBlock.Engine.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NodeBlock.Plugin.News.Nodes.CryptoPanic
 {
@@ -14,11 +11,14 @@ namespace NodeBlock.Plugin.News.Nodes.CryptoPanic
         public CryptoPanicConnectorNode(string id, BlockGraph graph)
           : base(id, graph, typeof(CryptoPanicConnectorNode).Name)
         {
-            this.InParameters.Add("apiKey", new NodeParameter(this, "apiKey", typeof(string), true));
+            CanBeSerialized = false;
 
-            this.OutParameters.Add("cryptopanicConnection", new NodeParameter(this, "cryptopanicConnection", typeof(CryptoPanicConnectorNode), true));
+            InParameters.Add("apiKey", new NodeParameter(this, "apiKey", typeof(string), true));
+
+            OutParameters.Add("cryptopanicConnection", new NodeParameter(this, "cryptopanicConnection", typeof(CryptoPanicConnectorNode), true));
         }
 
+        public API.CryptoPanicAPI API { get; set; }
 
         public override bool CanBeExecuted => false;
 
@@ -26,7 +26,9 @@ namespace NodeBlock.Plugin.News.Nodes.CryptoPanic
 
         public override void SetupConnector()
         {
-            this.Next();
+            API = new API.CryptoPanicAPI(InParameters["apiKey"].GetValue().ToString());
+
+            Next();
         }
 
         public override object ComputeParameterValue(NodeParameter parameter, object value)

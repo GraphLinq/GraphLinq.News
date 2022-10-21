@@ -1,14 +1,6 @@
-﻿using NodeBlock.Engine;
-using NodeBlock.Engine.Interop;
+﻿using Microsoft.Extensions.DependencyInjection;
 using NodeBlock.Engine.Interop.Plugin;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Collections.Concurrent;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 
 namespace NodeBlock.Plugin.News
 {
@@ -19,7 +11,7 @@ namespace NodeBlock.Plugin.News
 
         public static ServiceProvider Services;
 
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public override void Load()
         {
